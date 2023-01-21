@@ -3,6 +3,7 @@ package view;
 
 import DAO.FuncionarioDAO;
 import DTO.FuncionarioDTO;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -66,7 +67,19 @@ public class viewFuncionario extends javax.swing.JFrame {
 
         jLabel1.setText("Nome:");
 
+        txtNomeFuncionario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtNomeFuncionarioKeyPressed(evt);
+            }
+        });
+
         jLabel2.setText("Endereço:");
+
+        txtEnderecoFuncionario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtEnderecoFuncionarioKeyPressed(evt);
+            }
+        });
 
         jLabel3.setText("Código:");
 
@@ -76,6 +89,11 @@ public class viewFuncionario extends javax.swing.JFrame {
         bttnCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bttnCadastrarActionPerformed(evt);
+            }
+        });
+        bttnCadastrar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                bttnCadastrarKeyPressed(evt);
             }
         });
 
@@ -122,9 +140,38 @@ public class viewFuncionario extends javax.swing.JFrame {
 
         jLabel5.setText("Cargo:");
 
+        txtcargoFuncionario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtcargoFuncionarioKeyPressed(evt);
+            }
+        });
+
         jLabel6.setText("Salario:");
 
+        txtsalarioFuncionario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtsalarioFuncionarioKeyPressed(evt);
+            }
+        });
+
         jLabel7.setText("CPF:");
+
+        txtcpfFuncionario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtcpfFuncionarioKeyPressed(evt);
+            }
+        });
+
+        txttelefoneFuncionario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txttelefoneFuncionarioActionPerformed(evt);
+            }
+        });
+        txttelefoneFuncionario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txttelefoneFuncionarioKeyPressed(evt);
+            }
+        });
 
         jLabel8.setText("Telefone:");
 
@@ -289,6 +336,53 @@ public class viewFuncionario extends javax.swing.JFrame {
         pesquisarListaDeFuncionario();
         limparDados();
     }//GEN-LAST:event_bttnExcluirActionPerformed
+
+    private void txtNomeFuncionarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeFuncionarioKeyPressed
+       if(evt.getKeyCode() == KeyEvent.VK_ENTER ){
+           txtcpfFuncionario.requestFocus();
+           
+       }
+    }//GEN-LAST:event_txtNomeFuncionarioKeyPressed
+
+    private void txtcpfFuncionarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcpfFuncionarioKeyPressed
+        if(evt.getKeyCode()== KeyEvent.VK_ENTER){
+            txttelefoneFuncionario.requestFocus();
+        }
+    }//GEN-LAST:event_txtcpfFuncionarioKeyPressed
+
+    private void txttelefoneFuncionarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txttelefoneFuncionarioKeyPressed
+       if(evt.getKeyCode()== KeyEvent.VK_ENTER){
+           txtsalarioFuncionario.requestFocus();
+       }
+    }//GEN-LAST:event_txttelefoneFuncionarioKeyPressed
+
+    private void txttelefoneFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txttelefoneFuncionarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txttelefoneFuncionarioActionPerformed
+
+    private void txtsalarioFuncionarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtsalarioFuncionarioKeyPressed
+        if(evt.getKeyCode()== KeyEvent.VK_ENTER){
+            txtEnderecoFuncionario.requestFocus();
+        }
+    }//GEN-LAST:event_txtsalarioFuncionarioKeyPressed
+
+    private void txtEnderecoFuncionarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEnderecoFuncionarioKeyPressed
+        if(evt.getKeyCode()== KeyEvent.VK_ENTER){
+            txtcargoFuncionario.requestFocus();
+        }
+    }//GEN-LAST:event_txtEnderecoFuncionarioKeyPressed
+
+    private void txtcargoFuncionarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcargoFuncionarioKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            bttnCadastrar.requestFocus();
+        }
+    }//GEN-LAST:event_txtcargoFuncionarioKeyPressed
+
+    private void bttnCadastrarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_bttnCadastrarKeyPressed
+       cadastrarFuncionario();
+       pesquisarListaDeFuncionario();
+       limparDados();
+    }//GEN-LAST:event_bttnCadastrarKeyPressed
 
     
     /**
