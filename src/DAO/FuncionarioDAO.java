@@ -1,4 +1,4 @@
-
+    
 package DAO;
 
 import DTO.FuncionarioDTO;
@@ -74,7 +74,7 @@ public class FuncionarioDAO extends ConexaoDAO{
 
     public void alterarFuncionario(FuncionarioDTO objfuncionarioDTO) {
         
-        String sql = " UPDATE Funcionario set nome_funcionario = ?, cpf_funcionario = ? , telefone_funcionario = ? , salario_funcionario = ?, endereco_funcionario = ?,cargo_funcionario =? WHERE id_funcionario = ? ";
+        String sql = " UPDATE Funcionario set nome_funcionario = ?, cpf_funcionario = ? , telefone_funcionario = ? , salario_funcionario = ?, endereco_funcionario = ?,cargo_funcionario = ? WHERE id_funcionario = ? ";
         conn = new ConexaoDAO().conectarBD();
         
         try {
@@ -93,15 +93,16 @@ public class FuncionarioDAO extends ConexaoDAO{
         } catch (Exception erro) {
              JOptionPane.showMessageDialog(null, "Funcionario DAO alterarFuncionario: " + erro);
         }
+        
     }
    
-    public void excluirFuncionario(FuncionarioDTO objFuncionarioDTO){
+    public void excluirFuncionario(int id_funcionario){
         
         String sql = "DELETE FROM funcionario WHERE id_funcionario = ? ";
         conn= new ConexaoDAO().conectarBD();
         try {
             pstm = conn.prepareStatement(sql);  
-            pstm.setInt(1, objFuncionarioDTO.getId_funcionario());
+            pstm.setInt(1, id_funcionario);
             pstm.executeUpdate();
             pstm.close();
             
