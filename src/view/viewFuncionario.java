@@ -23,6 +23,7 @@ public class viewFuncionario extends javax.swing.JFrame {
     public viewFuncionario() {
         initComponents();
         pesquisarListaDeFuncionario();
+        limparDados();
      
        
     }
@@ -333,8 +334,8 @@ public class viewFuncionario extends javax.swing.JFrame {
 
     private void bttnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttnExcluirActionPerformed
         excluirFuncionario();
-        pesquisarListaDeFuncionario();
-        limparDados();
+      
+     
     }//GEN-LAST:event_bttnExcluirActionPerformed
 
     private void txtNomeFuncionarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeFuncionarioKeyPressed
@@ -532,16 +533,17 @@ public class viewFuncionario extends javax.swing.JFrame {
             
     }
     
-    private void excluirFuncionario(){
-        objFuncionarioDTO = new FuncionarioDTO();
-        
-        objFuncionarioDTO.setId_funcionario(Integer.parseInt(txtcodigoFuncionario.getText()));
-       
-        
-        objfuncionarioDAO = new FuncionarioDAO();
-        objfuncionarioDAO.excluirFuncionario(objFuncionarioDTO);
-                
-        
+    private void excluirFuncionario(){ 
+        int linha = tabelaFuncionario.getSelectedRow();
+        if (linha < 0) {
+            JOptionPane.showMessageDialog(null, "Selecione um usuário!");
+        } else {
+            int codigo = (int) tabelaFuncionario.getValueAt(linha, 0);
+            objfuncionarioDAO.excluirFuncionario(codigo);
+            pesquisarListaDeFuncionario();
+            limparDados();
+            JOptionPane.showMessageDialog(null, "Usuário excluido com sucesso!");
+       }
     }
+ }
 
-}
