@@ -19,8 +19,9 @@ public class FuncionarioDAO extends ConexaoDAO{
     PreparedStatement pstm;
     ResultSet rs;
     ArrayList<FuncionarioDTO> lista = new ArrayList<>();
-    
-         public void cadastrarFuncionario(FuncionarioDTO objfuncionariodto){
+    FuncionarioDTO objFuncionarioDTO = new FuncionarioDTO();
+
+         public boolean  cadastrarFuncionario(FuncionarioDTO objfuncionariodto){
         
    
         String sql= "INSERT INTO funcionario (nome_funcionario, cpf_funcionario, telefone_funcionario, salario_funcionario, endereco_funcionario,cargo_funcionario) VALUES(?,?,?,?,?,?)";
@@ -37,11 +38,13 @@ public class FuncionarioDAO extends ConexaoDAO{
             
             pstm.executeUpdate();
             pstm.close();
-            JOptionPane.showMessageDialog(null, "Dados inseridos com sucesso!");
+            return true;
+          
             
             
         } catch (SQLException erro) {
-            JOptionPane.showMessageDialog(null, "FuncionarioDAO cadastrarFuncionario: "+ erro);
+            System.out.println("DAO.FuncionarioDAO.cadastrarFuncionario()");
+            return false;
         }
        
     }
@@ -55,7 +58,7 @@ public class FuncionarioDAO extends ConexaoDAO{
                 pstm = conn.prepareStatement(sql);
                 rs = pstm.executeQuery();
                 while (rs.next()) {
-                   FuncionarioDTO objFuncionarioDTO = new FuncionarioDTO();
+                   objFuncionarioDTO = new FuncionarioDTO();
                    objFuncionarioDTO.setId_funcionario(rs.getInt("id_funcionario"));
                    objFuncionarioDTO.setNome_funcionario(rs.getString("nome_funcionario"));
                    objFuncionarioDTO.setCpf_funcionario(rs.getString("cpf_funcionario"));
@@ -71,11 +74,36 @@ public class FuncionarioDAO extends ConexaoDAO{
             }
             return lista;
     }
-
-    public void alterarFuncionario(FuncionarioDTO objfuncionarioDTO) {
-        
-        String sql = " UPDATE Funcionario set nome_funcionario = ?, cpf_funcionario = ? , telefone_funcionario = ? , salario_funcionario = ?, endereco_funcionario = ?,cargo_funcionario = ? WHERE id_funcionario = ? ";
+    public FuncionarioDTO selecionarFuncionarioDAO(int codigoUsuario) {
         conn = new ConexaoDAO().conectarBD();
+        String sql = " SELECT * FROM funcionario WHERE id_funcionario =  '" + codigoUsuario + "'";
+
+        try {
+            pstm = conn.prepareStatement(sql);
+            rs = pstm.executeQuery();
+            while (rs.next()) {
+                objFuncionarioDTO = new FuncionarioDTO();
+                objFuncionarioDTO.setId_funcionario(rs.getInt("id_funcionario"));
+                objFuncionarioDTO.setNome_funcionario(rs.getString("nome_funcionario"));
+                objFuncionarioDTO.setCpf_funcionario(rs.getString("cpf_funcionario"));
+                objFuncionarioDTO.setTelefone_funcionario(rs.getString("telefone_funcionario"));
+                objFuncionarioDTO.setSalario(rs.getDouble("salario_funcionario"));
+                objFuncionarioDTO.setEndereco_funcionario(rs.getString("endereco_funcionario"));
+                objFuncionarioDTO.setCargo_funcionario(rs.getString("cargo_funcionario"));
+               
+            }
+        } catch (SQLException erro) {
+            System.out.println("DAO.UsuarioDAO.selecionarFuncionarioDAO()" + erro);
+            
+        }
+        return objFuncionarioDTO ;
+    }
+    
+
+    public boolean alterarFuncionario(FuncionarioDTO objfuncionarioDTO) {
+        conn = new ConexaoDAO().conectarBD();
+        String sql = " UPDATE Funcionario set nome_funcionario = ?, cpf_funcionario = ? , telefone_funcionario = ? , salario_funcionario = ?, endereco_funcionario = ?,cargo_funcionario = ? WHERE id_funcionario = '" +objfuncionarioDTO.getId_funcionario() + "' ";
+        
         
         try {
             pstm =conn.prepareStatement(sql);
@@ -85,13 +113,14 @@ public class FuncionarioDAO extends ConexaoDAO{
             pstm.setDouble(4,objfuncionarioDTO.getSalario());
             pstm.setString(5, objfuncionarioDTO.getEndereco_funcionario());
             pstm.setString(6, objfuncionarioDTO.getCargo_funcionario());
-            pstm.setInt(7, objfuncionarioDTO.getId_funcionario());
+            
             
             pstm.executeUpdate();
             pstm.close();
-            
+            return true;
         } catch (Exception erro) {
-             JOptionPane.showMessageDialog(null, "Funcionario DAO alterarFuncionario: " + erro);
+            System.out.println("DAO.FuncionarioDAO.alterarFuncionario()" + erro);
+             return false;
         }
         
     }

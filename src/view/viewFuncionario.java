@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
-import java.lang.NumberFormatException;
+
 /**
  *
  * @author Felipe
@@ -17,6 +17,7 @@ public class viewFuncionario extends javax.swing.JFrame {
 
     FuncionarioDTO objFuncionarioDTO = new FuncionarioDTO();
     FuncionarioDAO objfuncionarioDAO = new FuncionarioDAO();
+    String salvarAtualizar = "salvar";
     /**
      * Creates new form viewFuncionario
      */
@@ -59,7 +60,6 @@ public class viewFuncionario extends javax.swing.JFrame {
         txtcpfFuncionario = new javax.swing.JTextField();
         txttelefoneFuncionario = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        bttncarregarCampos = new javax.swing.JButton();
         bttnLimpar = new javax.swing.JButton();
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -176,13 +176,6 @@ public class viewFuncionario extends javax.swing.JFrame {
 
         jLabel8.setText("Telefone:");
 
-        bttncarregarCampos.setText("Carregar ");
-        bttncarregarCampos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bttncarregarCamposActionPerformed(evt);
-            }
-        });
-
         bttnLimpar.setText("Limpar");
         bttnLimpar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -248,8 +241,7 @@ public class viewFuncionario extends javax.swing.JFrame {
                                 .addComponent(bttnLimpar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(bttnExcluir)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(bttncarregarCampos)))))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -288,7 +280,6 @@ public class viewFuncionario extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bttnAlterar)
                     .addComponent(bttnExcluir)
-                    .addComponent(bttncarregarCampos)
                     .addComponent(bttnLimpar))
                 .addGap(15, 15, 15))
         );
@@ -313,22 +304,12 @@ public class viewFuncionario extends javax.swing.JFrame {
         limparDados();
     }//GEN-LAST:event_bttnCadastrarActionPerformed
 
-    private void bttncarregarCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttncarregarCamposActionPerformed
-      carregarCamposFuncionario();
-    }//GEN-LAST:event_bttncarregarCamposActionPerformed
-
     private void bttnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttnLimparActionPerformed
         limparDados();
     }//GEN-LAST:event_bttnLimparActionPerformed
 
     private void bttnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttnAlterarActionPerformed
-        if (txtcodigoFuncionario.getText().isEmpty() || txtNomeFuncionario.getText().isEmpty() || txtEnderecoFuncionario.getText().isEmpty() || txtcargoFuncionario.getText().isEmpty() || txtsalarioFuncionario.getText().isEmpty() || txtcpfFuncionario.getText().isEmpty() || txttelefoneFuncionario.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Campos vazios, para altear clique primeiro em carregar. ");
-        } else {
-            alterarFuncionario();
-        }
-        pesquisarListaDeFuncionario();
-        limparDados();
+        alterarFuncionario();
 
     }//GEN-LAST:event_bttnAlterarActionPerformed
 
@@ -381,8 +362,7 @@ public class viewFuncionario extends javax.swing.JFrame {
 
     private void bttnCadastrarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_bttnCadastrarKeyPressed
        cadastrarFuncionario();
-       pesquisarListaDeFuncionario();
-       limparDados();
+      
     }//GEN-LAST:event_bttnCadastrarKeyPressed
 
     
@@ -426,7 +406,6 @@ public class viewFuncionario extends javax.swing.JFrame {
     private javax.swing.JButton bttnCadastrar;
     private javax.swing.JButton bttnExcluir;
     private javax.swing.JButton bttnLimpar;
-    private javax.swing.JButton bttncarregarCampos;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -458,11 +437,35 @@ public class viewFuncionario extends javax.swing.JFrame {
       objFuncionarioDTO.setEndereco_funcionario(txtEnderecoFuncionario.getText());
       objFuncionarioDTO.setCargo_funcionario(txtcargoFuncionario.getText());
       
+      if ("salvar".equals(salvarAtualizar)) {
+            objfuncionarioDAO = new FuncionarioDAO();
+            if (objfuncionarioDAO.cadastrarFuncionario(objFuncionarioDTO)) {
+                //cadastrado
+                JOptionPane.showMessageDialog(null, "Funcionario cadastrado com sucesso!");
+                limparDados();
+                pesquisarListaDeFuncionario();
+            } else {
+                //não cadastrou
+                JOptionPane.showMessageDialog(null, "Erro ao cadastar Funcionario!");
+            }
+        } else {
+               objFuncionarioDTO.setId_funcionario(Integer.parseInt(txtcodigoFuncionario.getText()));
+            if (objfuncionarioDAO.alterarFuncionario(objFuncionarioDTO)) {
+                //alterou 
+                JOptionPane.showMessageDialog(null, "Funcionario alterado com sucesso!");
+                limparDados();
+                pesquisarListaDeFuncionario();
+            } else {
+                //não alterou 
+                JOptionPane.showMessageDialog(null, "Erro ao alterar Funcionario!");
+            }
+
+        }
       
       
       
-      objfuncionarioDAO = new FuncionarioDAO();
-      objfuncionarioDAO.cadastrarFuncionario(objFuncionarioDTO);
+      
+      
       
     }
     public void limparDados() {
@@ -474,6 +477,7 @@ public class viewFuncionario extends javax.swing.JFrame {
         txttelefoneFuncionario.setText("");
         txtcodigoFuncionario.setText("");
         txtNomeFuncionario.requestFocus();
+         salvarAtualizar = "salvar";
     }
     
     public void pesquisarListaDeFuncionario() {
@@ -502,7 +506,7 @@ public class viewFuncionario extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "pesquisarListaDeFuncionario VIEW     :" + erro);
         }
     }
-    
+    /*
     private void carregarCamposFuncionario(){
         int setar = tabelaFuncionario.getSelectedRow();
         
@@ -514,24 +518,31 @@ public class viewFuncionario extends javax.swing.JFrame {
         txtEnderecoFuncionario.setText(tabelaFuncionario.getModel().getValueAt(setar,5).toString());
         txtcargoFuncionario.setText(tabelaFuncionario.getModel().getValueAt(setar,6).toString());
     }
-    
+    */
     private void alterarFuncionario(){
+         salvarAtualizar = "atualizar";
         FuncionarioDTO objFuncionarioDTO = new FuncionarioDTO();
-        
-       
-        
-        objFuncionarioDTO.setId_funcionario(Integer.parseInt(txtcodigoFuncionario.getText()));
-        objFuncionarioDTO.setNome_funcionario(txtNomeFuncionario.getText());
-        objFuncionarioDTO.setCpf_funcionario(txtcpfFuncionario.getText());
-        objFuncionarioDTO.setTelefone_funcionario(txttelefoneFuncionario.getText());
-        objFuncionarioDTO.setSalario(Double.parseDouble(txtsalarioFuncionario.getText()));
-        objFuncionarioDTO.setEndereco_funcionario(txtEnderecoFuncionario.getText());
-        objFuncionarioDTO.setCargo_funcionario(txtcargoFuncionario.getText());
-       
-        objfuncionarioDAO = new FuncionarioDAO();
-        objfuncionarioDAO.alterarFuncionario(objFuncionarioDTO);
+        int linha = tabelaFuncionario.getSelectedRow();
+        if (linha < 0) {
+            JOptionPane.showMessageDialog(null, "Selecione um Funcionario");
+        } else {
+            int codigo = (int) tabelaFuncionario.getValueAt(linha, 0);
+            objFuncionarioDTO = objfuncionarioDAO.selecionarFuncionarioDAO(codigo);
+            txtcodigoFuncionario.setText(String.valueOf(objFuncionarioDTO.getId_funcionario()));
+            txtNomeFuncionario.setText(objFuncionarioDTO.getNome_funcionario());
+            txtcpfFuncionario.setText(objFuncionarioDTO.getCpf_funcionario());
+            txttelefoneFuncionario.setText(objFuncionarioDTO.getTelefone_funcionario());
+            txtsalarioFuncionario.setText(String.valueOf(objFuncionarioDTO.getSalario()));
+            txtEnderecoFuncionario.setText(String.valueOf(objFuncionarioDTO.getEndereco_funcionario()));
+            txtcargoFuncionario.setText(objFuncionarioDTO.getCargo_funcionario());
             
+            
+           
+        }
+
     }
+
+    
     
     private void excluirFuncionario(){ 
         int linha = tabelaFuncionario.getSelectedRow();

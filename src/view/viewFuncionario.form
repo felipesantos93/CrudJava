@@ -124,8 +124,7 @@
                                   <Component id="bttnLimpar" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="bttnExcluir" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="bttncarregarCampos" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -177,7 +176,6 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="bttnAlterar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="bttnExcluir" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="bttncarregarCampos" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="bttnLimpar" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
@@ -349,14 +347,6 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Telefone:"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="bttncarregarCampos">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Carregar "/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bttncarregarCamposActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="bttnLimpar">
           <Properties>
